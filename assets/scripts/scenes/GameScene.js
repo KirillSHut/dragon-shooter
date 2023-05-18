@@ -6,12 +6,12 @@ class GameScene extends Phaser.Scene {
         this.createBackground();
         this.cursors = this.input.keyboard.createCursorKeys();
         this.dragon = new Dragon(this, 150, config.height / 2, 'dragon', 'dragon1');
-        this.enemy = new Enemy(this, config.width - 150, config.height / 2, 'enemy', 'enemy1');
+        this.enemies = new Enemies(this);
+        this.enemies.createTimer();
     }
 
     update() {
         this.dragon.move();
-        this.enemy.move();
         this.bg.tilePositionX += 0.5;
     }
 

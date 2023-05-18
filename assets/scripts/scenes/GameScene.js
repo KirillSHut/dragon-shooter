@@ -3,9 +3,15 @@ class GameScene extends Phaser.Scene {
         super('Game');
     }
     create() {
-        console.log('Game created');
         this.createBackground();
+        this.cursors = this.input.keyboard.createCursorKeys();
+        this.dragon = new Dragon(this);
     }
+
+    update() {
+        this.dragon.move();
+    }
+
     createBackground() {
         this.add.sprite(0, 0, 'bg').setOrigin(0);
     }

@@ -1,14 +1,12 @@
-class Dragon extends Phaser.GameObjects.Sprite {
-    constructor(scene) {
-        super(scene, 150, scene.game.config.height / 2, 'dragon', 'dragon1');
+class Dragon extends Hero {
+    constructor(scene, x, y, sprite, atlas) {
+        super(scene, x, y, sprite, atlas);
         this.scene = scene;
         this.init();
     }
 
     init() {
-        this.scene.add.existing(this);
-        this.scene.physics.add.existing(this);
-        this.body.enable = true;
+        super.init();
         this.velocity = 500;
     }
 

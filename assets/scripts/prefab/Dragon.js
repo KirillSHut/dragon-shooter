@@ -3,10 +3,21 @@ class Dragon extends Hero {
         super(scene, x, y, sprite, atlas);
         this.scene = scene;
         this.init();
+        this.timer = this.scene.time.addEvent({
+            delay: 1000,
+            callback: this.createFire,
+            callbackScope: this,
+            loop: true
+        })
+    }
+
+    createFire() {
+        this.fires.createFire(this);
     }
 
     init() {
         super.init();
+        this.fires = new Fires(this.scene);
         this.velocity = 500;
     }
 

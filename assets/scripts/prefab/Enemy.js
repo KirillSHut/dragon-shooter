@@ -30,7 +30,7 @@ class Enemy extends Hero {
 
     init() {
         super.init();
-        this.velocity = -1000;
+        this.velocity = -250;
         this.scene.events.on('update', this.checkPosition, this);
     }
 

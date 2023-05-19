@@ -1,26 +1,27 @@
-class Dragon extends Hero {
-    constructor(scene, x, y, sprite, atlas) {
-        super(scene, x, y, sprite, atlas);
-        this.scene = scene;
-        this.init();
-        this.timer = this.scene.time.addEvent({
-            delay: 1000,
-            callback: this.createFire,
-            callbackScope: this,
-            loop: true
-        })
+class Player extends Enemy {
+    constructor(scene) {
+        super({
+            scene,
+            x: 150,
+            y: config.height / 2, 
+            texture: 'dragon',
+            frame: 'dragon1',
+            velocity: 500
+        });
     }
-
-    createFire() {
+    init(data) {
+        super.init(data);
+        this.fires = new Fires(this.scene);
+        this.timer = this.scene.time.addEvent({
+            delay: 500,
+            loop: true,
+            callback: this.fire,
+            callbackScope: this
+        });
+    }
+    fire() {
         this.fires.createFire(this);
     }
-
-    init() {
-        super.init();
-        this.fires = new Fires(this.scene);
-        this.velocity = 500;
-    }
-
     move() {
         this.body.setVelocity(0);
 

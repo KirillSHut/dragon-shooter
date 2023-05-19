@@ -2,14 +2,24 @@ class Enemies extends Phaser.Physics.Arcade.Group {
     constructor(scene) {
         super();
         this.scene = scene;
-        this.counter = 10;
+        this.counterMax = 10;
+        this.counterCurrent = 0;
     }
 
     createEnemy() {
-        const enemy = Enemy.generate(this.scene);
+        let enemy = this.getFirstDead();
 
-        this.add(enemy);
+        if (!enemy) {
+            console.log("created");
+            enemy = Enemy.generate(this.scene);
+            this.add(enemy);
+        } else {
+            console.log("reseted");
+            enemy.reset();
+        }
+
         enemy.move();
+        ++this.counterCurrent;
     }
 
     createTimer() {
@@ -22,7 +32,7 @@ class Enemies extends Phaser.Physics.Arcade.Group {
     }
 
     onTimerTick() {
-        if (this.getLength() >= 10) {
+        if (this.counterCurrent >= this.counterMax) {
             this.timer.paused = true;
         } else {
             this.createEnemy();

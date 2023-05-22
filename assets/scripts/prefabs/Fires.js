@@ -1,6 +1,6 @@
 class Fires extends Phaser.Physics.Arcade.Group {
     constructor(scene) {
-        super();
+        super(scene.physics.world, scene);
         this.scene = scene;
     }
 

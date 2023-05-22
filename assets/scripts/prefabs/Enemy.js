@@ -4,7 +4,7 @@ class Enemy extends MovableObject {
         const y = Phaser.Math.Between(100, config.height - 100);
         return { x, y, frame: `enemy${Phaser.Math.Between(1, 4)}` };
     }
-    static generate(scene) {
+    static generate(scene, fires) {
         const data = Enemy.generateAttributes();
         return new Enemy({
             scene,
@@ -12,6 +12,7 @@ class Enemy extends MovableObject {
             y: data.y,
             texture: 'enemy',
             frame: data.frame,
+            fires,
             velocity: -250,
             bullet: {
                 delay: 1000,
@@ -26,7 +27,7 @@ class Enemy extends MovableObject {
         super.init(data);
         this.setOrigin(data.origin.x, data.origin.y);
         this.bullet = data.bullet;
-        this.fires = new Fires(this.scene);
+        this.fires = this.fires || new Fires(this.scene);
         this.timer = this.scene.time.addEvent({
             delay: this.bullet.delay,
             loop: true,

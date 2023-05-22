@@ -8,7 +8,7 @@ class MovableObject extends Phaser.GameObjects.Sprite {
         this.scene.physics.add.existing(this);
         this.body.enable = true;
         this.velocity = data.velocity;
-        this.fireVelocity = data.fireVelocity;
+        this.fires = data.fires;
         this.scene.events.on('update', this.update, this);
     }
     reset(x, y) {
@@ -31,6 +31,10 @@ class MovableObject extends Phaser.GameObjects.Sprite {
         this.setVisible(status);
         // деактивировать/активироть объект
         this.setActive(status);
+
+        if (this.timer) {
+            this.timer.paused = !status;
+        }
     }
     move() {
         this.body.setVelocityX(this.velocity);

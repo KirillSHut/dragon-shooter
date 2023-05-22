@@ -18,7 +18,8 @@ class GameScene extends Phaser.Scene {
         this.enemies.createTimer();
         this.createCompleteEvents();
         this.addOverlap();
-        this.createText();
+        this.createScoreText();
+        this.createWaveText();
     }
 
     createSounds() {
@@ -35,7 +36,14 @@ class GameScene extends Phaser.Scene {
         this.events.on('enemies-killed', this.onComplete, this);
     }
 
-    createText() {
+    createWaveText() {
+        this.waveText = this.add.text(10, config.height - 50, "Wave: 1", {
+            font: '40px CurseCasual',
+            color: '#fff'
+        });
+    }
+
+    createScoreText() {
         this.scoreText = this.add.text(10, 10, "Score: 0", {
             font: '40px CurseCasual',
             color: '#fff'

@@ -6,46 +6,36 @@ class Enemies extends Phaser.Physics.Arcade.Group {
         this.currentWave = 1;
         this.waves = {
             '1': {
-                enemies: 2,
+                enemies: 1,
                 delay: 2000
             },
             '2': {
-                enemies: 3,
+                enemies: 2,
                 delay: 1500
             },
             '3': {
-                enemies: 16,
+                enemies: 2,
                 delay: 1500
             },
             '4': {
-                enemies: 17,
+                enemies: 2,
                 delay: 1500
             },
             '5': {
-                enemies: 18,
+                enemies: 2,
                 delay: 1500
             },
         }
-        this.counterMax = this.getTotalEnemies();
         this.counterKilled = 0;
-        this.counterCurrent = 0;
+        this.counterCreated = 0;
         this.fires = new Fires(scene);
-    }
-
-    getTotalEnemies() {
-        let counterMax = 0;
-        for (let wave in this.waves) {
-            counterMax += this.waves[wave].enemies;
-        }
-
-        return counterMax;
     }
 
     checkKilled() {
         ++this.counterKilled;
 
         if (this.currentWave === 5) {
-            if (this.counterKilled >= this.waves['5'].enemies) {
+            if (this.counterKilled >= this.waves[this.waveMax].enemies) {
                 console.log('enemies-killed');
                 this.scene.events.emit('enemies-killed');
             }
@@ -64,7 +54,7 @@ class Enemies extends Phaser.Physics.Arcade.Group {
         }
 
         enemy.move();
-        ++this.counterCurrent;
+        ++this.counterCreated;
     }
 
     createTimer() {
@@ -78,16 +68,21 @@ class Enemies extends Phaser.Physics.Arcade.Group {
 
     onTimerTick() {
         if (this.counterKilled >= this.waves[this.currentWave].enemies) {
-            console.log('newWave');
             this.timer.remove();
             this.nextWave();
         } else {
-            this.createEnemy();
+            if (this.counterCreated === this.waves[this.currentWave].enemies) {
+                return false
+            } else {
+                this.createEnemy();
+            }
         }
     }
 
     nextWave() {
-        this.counterCurrent = 0;
+        console.log('next wave');
+        this.counterKilled = 0;
+        this.counterCreated = 0;
         ++this.currentWave;
         this.scene.waveText.setText(`Wave: ${this.currentWave}`);
         this.createTimer();

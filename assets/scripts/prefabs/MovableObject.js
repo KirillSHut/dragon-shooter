@@ -7,13 +7,15 @@ class MovableObject extends Phaser.GameObjects.Sprite {
         this.scene.add.existing(this);
         this.scene.physics.add.existing(this);
         this.body.enable = true;
+        this.lives = data.lives ? data.lives : 1;
         this.velocity = data.velocity;
         this.fires = data.fires;
         this.scene.events.on('update', this.update, this);
     }
-    reset(x, y) {
+    reset(x, y, lives) {
         this.x = x;
         this.y = y;
+        this.lives = lives ? lives : 1;
         this.setAlive(true);
     }
     isDead() {

@@ -7,6 +7,7 @@ class Player extends Enemy {
             texture: 'dragon',
             frame: 'dragon1',
             velocity: 500,
+            lives: 2,
             bullet: {
                 delay: 500,
                 texture: 'fire',

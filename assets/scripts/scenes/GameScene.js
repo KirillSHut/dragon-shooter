@@ -70,13 +70,26 @@ class GameScene extends Phaser.Scene {
             this.scoreText.setText(`Score: ${this.score}`);
         }
 
+        console.log(source, target);
+
         if (target.texture.key === 'enemy') {
             this.sounds.boom.play();
-            Boom.generate(this, target.x, target.y);
+            if (target.lives === 1) {
+                Boom.generate(this, target.x, target.y);
+            }
         }
 
-        source.setAlive(false);
-        target.setAlive(false);
+        if (source.lives === 1) {
+            source.setAlive(false);
+        } else {
+            --source.lives;
+        }
+
+        if (target.lives === 1) {
+            target.setAlive(false);
+        } else {
+            --target.lives;
+        }
     }
 
     update() {
